@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sws="http://www.springframework.org/schema/web-services"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p"
+       
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/web-services 
+        http://www.springframework.org/schema/web-services/web-services-1.5.xsd
+        
+        http://www.springframework.org/schema/mvc          
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        
+        http://www.springframework.org/schema/tx           
+        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+        
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+       >
+       
+    
+    <sws:marshalling-endpoints />
+    <tx:annotation-driven />
+    <mvc:annotation-driven />
+    
+	<bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+    	<property name="contextPaths">
+        	<list>
+        		<value>com.pearson.ed.prospero.ws</value>
+        	</list>
+        </property>
+        <property name="mtomEnabled" value="true"/>
+    </bean>
+    
+    
+    
+    <!-- CONTROLLERS -->
+    <!-- CONTROLLERS -->
+    <!-- CONTROLLERS -->
+    <!-- CONTROLLERS -->
+    <bean id="sendController" class="com.pearson.ed.prospero.forms.SendController">
+	    <property name="enviroLookup" ref="enviroLookup"></property>
+	    <property name="httpClient" ref="httpClient"></property>
+    </bean>
+    
+    <bean id="subscribeController" class="com.pearson.ed.prospero.forms.SubscribeController">
+	    <property name="enviroLookup" ref="enviroLookup"></property>
+	    <property name="httpClient" ref="httpClient"></property>
+    </bean>
+    
+    <bean id="welcome" class="com.pearson.ed.prospero.ws.Welcome"/>
+    
+	<bean id="restfulMarshallingUserEndPointV4" class="com.pearson.ed.prospero.ws.RestfulMarshallingUserEndPointV4"
+	init-method="initMethod">
+	   	<property name="enviroLookup" ref="enviroLookup"/>
+    	<property name="principalLookup" ref="principalLookup"/>
+    	<property name="credsLookup" ref="credsLookup"/>
+    	<property name="prosperoService" ref="prosperoService"></property>
+    	<property name="emailWriter" ref="emailWriter"></property>
+    	<property name="conMan" ref="multiThreadedHttpConnectionManager"></property>
+    	<property name="emailSet">
+    		<set>
+    			<value>Shawn.Buttrick@pearson.com</value>
+				<value>Nicholas.Lloyd@pearson.com</value>
+				<value>Tashdid.Khan@pearson.com</value>
+				<value>Frank.Papineau@pearson.com</value>    			
+				<value>Richard.Nordin@pearson.com</value>
+				<value>Sam.Schifman@pearson.com</value>
+    		</set> 
+    	</property>
+ 		<property name="defaultSubscriptions">
+ 			<list>
+ 				<ref bean="devSmsUserEventSubscription"/>
+ 				<ref bean="testSmsUserEventSubscription"/>
+ 				<ref bean="intSmsUserEventSubscription"/>
+ 				<ref bean="ppeSmsUserEventSubscription"/>
+ 			</list>
+ 		</property>
+ 		
+    </bean>
+    
+	<!-- Misc Stuff -->
+	<!-- Misc Stuff -->
+	<!-- Misc Stuff -->
+	<!-- Misc Stuff -->
+	<!-- Misc Stuff -->
+	<bean id="connMgr" class="org.apache.commons.httpclient.MultiThreadedHttpConnectionManager">
+		<property name="maxConnectionsPerHost" value="4"></property><!-- default is 2  --> 
+		<property name="maxTotalConnections" value="25"></property><!-- default is 20 --> 
+	</bean>
+	
+	
+	<bean id="httpClient" class="org.apache.commons.httpclient.HttpClient">
+		<constructor-arg>
+			<ref bean="multiThreadedHttpConnectionManager"/>
+		</constructor-arg>
+	</bean>
+	<bean id="multiThreadedHttpConnectionManager" class="org.apache.commons.httpclient.MultiThreadedHttpConnectionManager">
+	</bean>
+	
+	
+    
+	<bean id ="restCLient" class="com.pearson.ed.prospero.ws.RestfulServiceClientImpl" > 
+		<property name="restClient" ref="httpCLient"/> 
+	</bean>
+	
+	<bean id="httpCLient" class="org.apache.commons.httpclient.HttpClient">
+		<constructor-arg>
+			<ref bean="connectionManager"/>
+		</constructor-arg>
+	</bean>
+    <bean id="connectionManager" class="org.apache.commons.httpclient.MultiThreadedHttpConnectionManager"/>
+    
+    
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+    
+	<bean id="prosperoService" class="com.pearson.ed.prospero.ws.ProsperoService">
+		<property name="serverUrl" value="http://pidev01/v1/subscription"/>
+		<property name="restCLient" ref="restCLient"/>
+	</bean>
+	
+    
+    
+    
+    <!-- Lookup Classes -->
+    <!-- Lookup Classes -->
+    <!-- Lookup Classes -->
+    <!-- Lookup Classes -->
+    <!-- Lookup Classes -->
+    <bean id="enviroLookup" class="com.pearson.ed.prospero.lookups.EnviroLookupImpl">
+    	<property name="devEnviroNickname" ref="devNickname"/>
+    	<property name="testEnviroNickname" ref="testNickname"/>
+    	<property name="intEnviroNickname" ref="intNickname"/>
+    	<property name="ppeEnviroNickname" ref="ppeNickname"/>
+    	<property name="prodEnviroNickname" ref="prodNickname"/>
+    	
+    	<property name="devEnviroUrl" ref="devProsperoBaseUrl"/>
+    	<property name="testEnviroUrl" ref="testProsperoBaseUrl"/>
+    	<property name="intEnviroUrl" ref="intProsperoBaseUrl"/>
+    	<property name="ppeEnviroUrl" ref="ppeProsperoBaseUrl"/>
+    	<property name="prodEnviroUrl" ref="prodProsperoBaseUrl"/>
+    	
+    	<property name="devEnviroSendPath" ref="prosperoSendPath"/>
+    	<property name="testEnviroSendPath" ref="prosperoSendPath"/>
+    	<property name="intEnviroSendPath" ref="prosperoSendPath"/>
+    	<property name="ppeEnviroSendPath" ref="prosperoSendPath"/>
+    	
+    	<property name="devEnviroSubscribePath" ref="prosperoSubscribePath"/>
+    	<property name="testEnviroSubscribePath" ref="prosperoSubscribePath"/>
+    	<property name="intEnviroSubscribePath" ref="prosperoSubscribePath"/>
+    	<property name="ppeEnviroSubscribePath" ref="prosperoSubscribePath"/>
+    	
+    </bean>
+    
+    <bean id="principalLookup" class="com.pearson.ed.prospero.lookups.PrincipalLookupImpl">
+    	<property name="devEnviroNickname" ref="devNickname"/>
+    	<property name="testEnviroNickname" ref="testNickname"/>
+    	<property name="intEnviroNickname" ref="intNickname"/>
+    	<property name="ppeEnviroNickname" ref="ppeNickname"/>
+    	
+    	<property name="devEnviroPrincipal" ref="devUsername"/>
+    	<property name="testEnviroPrincipal" ref="testUsername"/>
+    	<property name="intEnviroPrincipal" ref="intUsername"/>
+    	<property name="ppeEnviroPrincipal" ref="ppeUsername"/>
+    </bean>
+    
+    <bean id="credsLookup" class="com.pearson.ed.prospero.lookups.CredsLookupImpl">
+    	<property name="devEnviroNickname" ref="devNickname"/>
+    	<property name="testEnviroNickname" ref="testNickname"/>
+    	<property name="intEnviroNickname" ref="intNickname"/>
+    	<property name="ppeEnviroNickname" ref="ppeNickname"/>
+    	
+    	<property name="devEnviroCred" ref="devPassword"/>
+    	<property name="testEnviroCred" ref="testPassword"/>
+    	<property name="intEnviroCred" ref="intPassword"/>
+    	<property name="ppeEnviroCred" ref="ppePassword"/>
+    </bean>
+    
+    
+    
+    
+    <!--  Quartz Scheduler Stuff -->
+    <!--  Quartz Scheduler Stuff -->
+    <!--  Quartz Scheduler Stuff -->
+    <!--  Quartz Scheduler Stuff -->
+    <!--  Quartz Scheduler Stuff -->
+	<bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" autowire="byName">
+  		<property name="triggers">
+    		<list>
+     		 <ref bean="prosperoSummaryTrigger" />
+   		    </list>
+       </property>
+    </bean>
+     
+	<bean id="prosperoSummaryTrigger" 
+    	class="org.springframework.scheduling.quartz.SimpleTriggerBean" 
+  	 	p:jobDetail-ref="prosperoSummaryJob" 
+  	 	p:startDelay="30000" 
+  	 	p:repeatInterval="60000">
+	</bean> 
+  	 	
+	<bean id="prosperoSummaryJob" 
+  	 	class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean" 
+	 	p:targetObject-ref="restfulMarshallingUserEndPointV4" 
+	 	p:targetMethod="doScheduledSummary"
+   	 	p:concurrent="false">
+	</bean>
+    
+    
+    
+    
+    <!-- EMAIL Sending Beans -->
+    <!-- EMAIL Sending Beans -->
+    <!-- EMAIL Sending Beans -->
+    <!-- EMAIL Sending Beans -->
+    <!-- EMAIL Sending Beans -->
+    <bean id="emailWriter" class="com.pearson.ed.prospero.email.EmailWriterImpl">
+		<property name="mailSender">
+			<ref bean="mailSender"/>
+		</property>
+	</bean>
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">  
+		<property name="host">  
+			<value>${notification_service.email.host}</value>
+		</property>  
+		<property name="javaMailProperties">  
+			<props>  
+				<prop key="mail.smtp.auth">false</prop> 
+				<prop key="mail.smtp.starttls.enable">false</prop>
+				<prop key="mail.smtp.timeout">25000</prop>
+			</props>
+		</property>
+		<property name="port">
+			<value>${notification_service.email.port}</value>
+		</property>    
+	</bean>
+
+
+	<!-- Environment Nicknames -->	
+	<!-- Environment Nicknames -->
+	<!-- Environment Nicknames -->
+	<bean id="devNickname" class="java.lang.String">
+   		<constructor-arg value="dev"/>
+   	</bean>
+   	<bean id="testNickname" class="java.lang.String">
+   		<constructor-arg value="test"/>
+   	</bean>
+   	<bean id="intNickname" class="java.lang.String">
+   		<constructor-arg value="int"/>
+   	</bean>
+   	<bean id="ppeNickname" class="java.lang.String">
+   		<constructor-arg value="ppe"/>
+   	</bean>
+   	<bean id="prodNickname" class="java.lang.String">
+   		<constructor-arg value="prod"/>
+   	</bean>
+
+</beans>

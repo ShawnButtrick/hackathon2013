@@ -49,66 +49,12 @@
 		  	</fieldset>
 		  	
 		  	<fieldset>
-		  		<legend>Client Info</legend>
+		  		<legend>Search</legend>
 		  		
-		  		<form:label path="clientId">
-		  			Client ID <form:errors path="clientId" cssClass="error" />
+				<form:label path="searchString">
+		  			Search String <form:errors path="searchString" cssClass="error" />
 		 		</form:label>
-		  		<form:input path="clientId" />
-		  		
-				<form:label path="clientString">
-		  			Client String <form:errors path="clientString" cssClass="error" />
-		 		</form:label>
-		  		<form:input path="clientString" />
-			</fieldset>
-			
-			<fieldset>
-		  		<legend>System Info</legend>
-		  		
-		  		<form:label path="system">
-		  			System <form:errors path="system" cssClass="error" />
-		 		</form:label>
-		  		<form:input path="system" />
-		  		
-				<form:label path="subSystem">
-		  			Sub System <form:errors path="subSystem" cssClass="error" />
-		 		</form:label>
-		  		<form:input path="subSystem" />
-		  	</fieldset>	
-		  		
-	  		<fieldset>
-	  			<legend>Principal & Key</legend>
-	  			
-	  			<form:label path="principal">
-		  			Principal <form:errors path="principal" cssClass="error" />
-		 		</form:label>
-		  		<form:input path="principal" />
-	  			
-	  			<form:label path="key">
-		  			Key <form:errors path="key" cssClass="error" />
-		 		</form:label>
-		  		<form:input path="key" />
-	  			
-			</fieldset>
-			
-			<fieldset>
-		  		<legend>Callback & MessageType & Tags</legend>
-		  		
-		  		<form:label path="callbackUrl">
-		  			Callback URL <form:errors path="callbackUrl" cssClass="error" />
-		 		</form:label>
-		  		<form:input path="callbackUrl" />
-		  		
-		  		<form:label path="messageType">
-		  			Message Type <form:errors path="messageType" cssClass="error" />
-		 		</form:label>
-		  		<form:input path="messageType" />
-		  		
-		  		<form:label path="tags">
-		  			Tags <form:errors path="tags" cssClass="error" />
-		 		</form:label>
-		  		<form:input path="tags" />
-		  		
+		  		<form:input path="searchString" />
 			</fieldset>
 			
 			<p><button type="submit">Submit</button></p>

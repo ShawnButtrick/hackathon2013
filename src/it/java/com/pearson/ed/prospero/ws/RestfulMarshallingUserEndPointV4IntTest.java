@@ -7,6 +7,7 @@ import static org.springframework.test.web.server.result.MockMvcResultMatchers.s
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.http.MediaType;
@@ -34,7 +35,8 @@ public class RestfulMarshallingUserEndPointV4IntTest
 				.xmlConfigSetup("classpath:/applicationContext-prospero-int.xml")
 				.configureWebAppRootDir("src/main/webapp", false).build();
 		}
-	
+
+	@Ignore
 	@Test
 	public void testDevEnviro() throws Exception  
 	{
@@ -43,6 +45,7 @@ public class RestfulMarshallingUserEndPointV4IntTest
 		
 	}
 	
+	@Ignore
 	@Test
 	public void testTestEnviro() throws Exception  
 	{
@@ -51,6 +54,7 @@ public class RestfulMarshallingUserEndPointV4IntTest
 		//.andExpect(content().type(MediaType.APPLICATION_JSON));
 	}
 	
+	@Ignore
 	@Test
 	public void testIntEnviro() throws Exception  
 	{
@@ -59,12 +63,14 @@ public class RestfulMarshallingUserEndPointV4IntTest
 		//.andExpect(content().type(MediaType.APPLICATION_JSON));
 	}
 	
+	@Ignore
 	@Test
 	public void testPpeEnviro() throws Exception  
 	{
 		mockMvc.perform(get("/ppe/status"));
 	}
 	
+	@Ignore
 	@Test
 	public void testProdEnviro() throws Exception  
 	{
@@ -73,7 +79,7 @@ public class RestfulMarshallingUserEndPointV4IntTest
 		.andExpect(content().type(MediaType.APPLICATION_JSON));
 	}
 	
-
+	@Ignore
 	@Test
 	public void testSummaryRaw() throws Exception  
 	{
@@ -82,6 +88,7 @@ public class RestfulMarshallingUserEndPointV4IntTest
 		.andExpect(content().type(MediaType.APPLICATION_JSON));
 	}
 	
+	@Ignore
 	@Test
 	public void testSad() throws Exception  
 	{
@@ -89,6 +96,7 @@ public class RestfulMarshallingUserEndPointV4IntTest
 		
 	}
 	
+	@Ignore
 	@Test
 	public void testSummary() throws Exception  
 	{

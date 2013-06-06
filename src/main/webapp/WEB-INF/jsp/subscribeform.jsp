@@ -35,19 +35,6 @@
 		  		</s:bind>
 			</div>
 			
-			<fieldset>
-				<legend>Environment</legend>
-				<form:label path="enviro">
-					(select one)
-				</form:label>
-				<form:select path="enviro">
-					<form:option value="dev">Dev</form:option>
-					<form:option value="test">Test</form:option>
-					<form:option value="int">Int</form:option>
-					<form:option value="ppe">PPE</form:option>
-				</form:select>
-		  	</fieldset>
-		  	
 		  	<fieldset>
 		  		<legend>Search</legend>
 		  		

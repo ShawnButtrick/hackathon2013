@@ -46,7 +46,6 @@
     </bean>
     
     <bean id="subscribeController" class="com.pearson.ed.prospero.forms.SubscribeController">
-	    <property name="enviroLookup" ref="enviroLookup"></property>
 	    <property name="httpClient" ref="httpClient"></property>
     </bean>
     

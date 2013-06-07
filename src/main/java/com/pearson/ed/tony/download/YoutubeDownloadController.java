@@ -91,13 +91,15 @@ public class YoutubeDownloadController {
 									String video = futureVideo.get();
 									File videoFile = new File(video);
 									File downLoadedVideoFile = new File(downloadDirectory + File.separator + videoFile.getName());
-									videoFile.renameTo(downLoadedVideoFile);
+									if (!videoFile.getAbsolutePath().equalsIgnoreCase(downLoadedVideoFile.getAbsolutePath())) {
+										videoFile.renameTo(downLoadedVideoFile);
+									}
 									movedFutureVideos.add(futureVideo);
 								}
 							} catch (Exception e) {
 								System.out.println("Exception occurred for video file: " + new Date());
 								System.out.println(e.getClass().getCanonicalName() + ": " + e.getMessage());
-								// Fuck is, dump the thing anyway. It's just temp :-P
+								// Fuck it, dump the thing anyway. It's just temp :-P
 								movedFutureVideos.add(futureVideo);
 							}
 						}

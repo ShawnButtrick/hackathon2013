@@ -46,7 +46,11 @@
     </bean>
     
     <bean id="subscribeController" class="com.pearson.ed.prospero.forms.SubscribeController">
-	    <property name="httpClient" ref="httpClient"></property>
+    </bean>
+    
+    <bean id="searchController" class="com.pearson.ed.prospero.forms.SearchController">
+    </bean>
+    <bean id="redirectController" class="com.pearson.ed.prospero.forms.RedirectController">
     </bean>
     
     <bean id="welcome" class="com.pearson.ed.prospero.ws.Welcome"/>

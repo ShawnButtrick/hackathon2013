@@ -15,7 +15,7 @@ public class YoutubeDownloadController {
 	
 	private final AsyncYouTubeDownloader downloader = new AsyncYouTubeDownloader();
 	private final List<Future<String>> futureVideos = Collections.synchronizedList(new ArrayList<Future<String>>());
-	private String downloadDirectory = TEMP_DIRECTORY; // default to system temp
+	private String downloadDirectory = System.getProperty("user.home"); // default to system temp
 	private ExecutorService fileTransferExecutorService = Executors.newSingleThreadExecutor();
 	private boolean isPolling = false;
 	

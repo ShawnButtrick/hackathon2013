@@ -31,27 +31,20 @@ import com.google.api.services.youtube.model.PlaylistItemListResponse;
 import com.pearson.ed.tony.download.YoutubeDownloadController;
 
 @Controller
-@RequestMapping("/subscribeform")
-@SessionAttributes("subscribeBean")
-public class SubscribeController 
+@RequestMapping("/searchform")
+@SessionAttributes("searchBean")
+public class SearchController 
 {
-	
 	private static final JsonFactory JSON_FACTORY = new JacksonFactory();
 	YoutubeDownloadController downloader = new YoutubeDownloadController();
 	
-	private ClientConnectionManager man = new PoolingClientConnectionManager();
-	private HttpClient client = new DefaultHttpClient(man);
-
-	
 	// Invoked initially to create the "form" attribute
 	// Once created the "form" attribute comes from the HTTP session (see @SessionAttributes)
-	@ModelAttribute("subscribeBean")
-	public SubscribeBean createFormBean() 
+	@ModelAttribute("searchBean")
+	public SearchBean createFormBean() 
 	{
-		SubscribeBean sb = new SubscribeBean();
-		
-		sb.setSearchString("SMS-CLIENT-STRING");
-		
+		SearchBean sb = new SearchBean();
+		sb.setSearchString("what u wanna search for?");
 		return sb;
 	}
 	
@@ -67,15 +60,11 @@ public class SubscribeController
 		{
 			return null;
 		}
-		//https://www.googleapis.com/youtube/v3/playlistItems?part=id,snippet,status,contentDetails&playlistId=PLD58BCF75F880DD81&key=AIzaSyD1lRHrPMSkGXjLelY7Rj29hhOpH7eBeUs
 		
-		String baseUrl ="https://www.googleapis.com/youtube/v3/playlistItems?part=id,snippet,status,contentDetails";
-		String playlistId = "&playlistId="+formBean.getSearchString();
-		String keyId = "&key=AIzaSyD1lRHrPMSkGXjLelY7Rj29hhOpH7eBeUs";
-		String max = "&maxResults=2";
+		HttpGet get = new HttpGet("https://www.googleapis.com/youtube/v3/playlistItems?part=id,snippet,status,contentDetails&playlistId=PLD58BCF75F880DD81&key=AIzaSyD1lRHrPMSkGXjLelY7Rj29hhOpH7eBeUs");
+		ClientConnectionManager man = new PoolingClientConnectionManager();
+		HttpClient client = new DefaultHttpClient(man);
 		
-		
-		HttpGet get = new HttpGet(baseUrl+playlistId+keyId+max);
 		HttpResponse response = client.execute(get);
 		HttpEntity entity = response.getEntity();
 		PlaylistItemListResponse items = JSON_FACTORY.fromInputStream(entity.getContent(), PlaylistItemListResponse.class);

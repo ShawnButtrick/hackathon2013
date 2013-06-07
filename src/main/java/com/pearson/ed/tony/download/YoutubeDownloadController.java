@@ -111,6 +111,11 @@ public class YoutubeDownloadController {
 		}
 	}
 	
+	public void shutdown() {
+		downloader.shutdown();
+		fileTransferExecutorService.shutdown();
+	}
+	
 	public static void main(String[] args) throws Exception {
 		YoutubeDownloadController downloader = new YoutubeDownloadController();
 		downloader.setDownloadDirectory("C:\\Users\\uwestan\\Downloads");

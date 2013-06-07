@@ -62,6 +62,9 @@ public class AsyncYouTubeDownloader {
 		return futureVideo;
 	}
 	
+	public void shutdown() {
+		youtubeDownloadExecutorService.shutdown();
+	}
 
 	public static void main(String[] args) {
 		AsyncYouTubeDownloader downloader = new AsyncYouTubeDownloader();

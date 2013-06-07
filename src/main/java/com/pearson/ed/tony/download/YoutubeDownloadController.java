@@ -11,6 +11,7 @@ import java.util.concurrent.Future;
 
 public class YoutubeDownloadController {
 	static private final String TEMP_DIRECTORY = System.getProperty("java.io.tmpdir");
+	static private final String YOUTUBE_URL = "http://www.youtube.com/watch?v=";
 	
 	private final AsyncYouTubeDownloader downloader = new AsyncYouTubeDownloader();
 	private final List<Future<String>> futureVideos = Collections.synchronizedList(new ArrayList<Future<String>>());
@@ -27,12 +28,34 @@ public class YoutubeDownloadController {
 	}
 
 	/**
+	 * Download a single video with the Id
+	 * @param videoId
+	 */
+	public void downloadVideoId(final String videoId) {
+		ArrayList<String> videoIds = new ArrayList<String>();
+		videoIds.add(videoId);
+		downloadVideoIds(videoIds);
+	}
+	
+	/**
+	 * For downloading a buncha videos with the Ids
+	 * @param videoIds
+	 */
+	public void downloadVideoIds(final List<String> videoIds) {
+		ArrayList<String> urls = new ArrayList<String>();
+		for (String videoId : videoIds) {
+			urls.add(YOUTUBE_URL + videoId);
+		}
+		downloadVideos(urls);
+	}
+	
+	/**
 	 * For downloading a single video.
 	 * 
 	 * @param url
 	 * @param directory
 	 */
-	public void downloadVideo(String url) {
+	public void downloadVideo(final String url) {
 		ArrayList<String> urls = new ArrayList<String>();
 		urls.add(url);
 		downloadVideos(urls);
@@ -43,7 +66,7 @@ public class YoutubeDownloadController {
 	 * @param urls
 	 * @param directory
 	 */
-	public void downloadVideos(List<String> urls) {
+	public void downloadVideos(final List<String> urls) {
 		List<Future<String>> newFutureVideos = downloader.downloadVideos(urls, TEMP_DIRECTORY);
 		futureVideos.addAll(newFutureVideos);
 		pollForFiles();
@@ -90,15 +113,17 @@ public class YoutubeDownloadController {
 		YoutubeDownloadController downloader = new YoutubeDownloadController();
 		downloader.setDownloadDirectory("C:\\Users\\uwestan\\Downloads");
 		ArrayList<String> urls = new ArrayList<String>();
-		urls.add("http://www.youtube.com/watch?v=sTSA_sWGM44");
-		//urls.add("http://vimeo.com/52716355");
-		ArrayList<String> urls2 = new ArrayList<String>();
-		urls2.add("http://www.youtube.com/watch?v=TcxpbhM0DaA");
-		urls2.add("http://www.youtube.com/watch?v=ZzN36M0o5aM");
-		//urls2.add("http://vimeo.com/channels/staffpicks/67676694");
-		downloader.downloadVideos(urls);
-		Thread.sleep(10000);
-		downloader.downloadVideos(urls2);
+//		urls.add("http://www.youtube.com/watch?v=sTSA_sWGM44");
+//		//urls.add("http://vimeo.com/52716355");
+//		ArrayList<String> urls2 = new ArrayList<String>();
+//		urls2.add("http://www.youtube.com/watch?v=TcxpbhM0DaA");
+//		urls2.add("http://www.youtube.com/watch?v=ZzN36M0o5aM");
+//		//urls2.add("http://vimeo.com/channels/staffpicks/67676694");
+//		downloader.downloadVideos(urls);
+//		Thread.sleep(10000);
+//		downloader.downloadVideos(urls2);
+		
+		downloader.downloadVideoId("Dh0OuuGrzlQ");
 		
     }
 	

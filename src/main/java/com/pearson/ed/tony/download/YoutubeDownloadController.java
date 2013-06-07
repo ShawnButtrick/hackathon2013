@@ -104,6 +104,9 @@ public class YoutubeDownloadController {
 							}
 						}
 						futureVideos.removeAll(movedFutureVideos);
+						if (movedFutureVideos.size() > 0 && futureVideos.isEmpty()) {
+							System.out.println("Video download queue is now empty.");
+						}
 						movedFutureVideos.clear();
 					}
 				}

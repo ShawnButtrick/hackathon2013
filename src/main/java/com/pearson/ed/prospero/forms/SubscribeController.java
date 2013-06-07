@@ -46,9 +46,9 @@ public class SubscribeController
 	// Invoked initially to create the "form" attribute
 	// Once created the "form" attribute comes from the HTTP session (see @SessionAttributes)
 	@ModelAttribute("subscribeBean")
-	public SubscribeBean createFormBean() 
+	public SearchBean createFormBean() 
 	{
-		SubscribeBean sb = new SubscribeBean();
+		SearchBean sb = new SearchBean();
 		
 		sb.setSearchString("SMS-CLIENT-STRING");
 		
@@ -72,8 +72,8 @@ public class SubscribeController
 		String baseUrl ="https://www.googleapis.com/youtube/v3/playlistItems?part=id,snippet,status,contentDetails";
 		String playlistId = "&playlistId="+formBean.getSearchString();
 		String keyId = "&key=AIzaSyD1lRHrPMSkGXjLelY7Rj29hhOpH7eBeUs";
-		String max = "&maxResults=2";
-		
+		String max = "&maxResults="+formBean.getMaxResults();
+	
 		
 		HttpGet get = new HttpGet(baseUrl+playlistId+keyId+max);
 		HttpResponse response = client.execute(get);
@@ -91,7 +91,8 @@ public class SubscribeController
 		downloader.downloadVideoIds(videoIds);
 		
 		//UriComponents redirectUri = UriComponentsBuilder.fromPath("/rest/results").queryParam("searchString", formBean.getSearchString()).build().encode();
-		return "ok";
+		 redirectAttrs.addFlashAttribute("message", "Video Count Queued: " +videoIds.size());
+	     return "redirect:/rest/subscribeform";            
 	}
 	
 }

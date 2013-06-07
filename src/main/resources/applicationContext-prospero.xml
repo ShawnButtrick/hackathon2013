@@ -7,7 +7,7 @@
        >
        
     <import resource="classpath:applicationContext-common.xml" />
-    <import resource="classpath:applicationContext-subscriptions.xml" />
+    
     
     <bean id="mainPropertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

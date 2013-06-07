@@ -6,18 +6,14 @@
 <html>
 
 <head>
-	<title>Prospero Subscriber Page</title>
+	<title>Playlist Downloader Page</title>
 	<link href="<c:url value="/resources/form.css" />" rel="stylesheet"  type="text/css" />		
 	<script type="text/javascript" src="<c:url value="/resources/jquery/1.6/jquery.js" />"></script>
 </head>
 
 <body>
 	<div id="formsContent">
-		<h2>This page will allow you to SUBSCRIBE to Prospero messages.</h2>
-		<p>
-			See <a href="http://code.pearson.com/prospero-integration-guide-version-1-subscriptions-create">HERE</a> for more details about subscribing to Prospero messages.
-		</p>
-		
+		<h2>Blah blah blah ...........</h2>
 		
 		<form:form id="form" method="post" modelAttribute="subscribeBean" cssClass="cleanform">
 			<div class="header">
@@ -36,12 +32,17 @@
 			</div>
 			
 		  	<fieldset>
-		  		<legend>Search</legend>
+		  		<legend>Download</legend>
 		  		
 				<form:label path="searchString">
-		  			Search String <form:errors path="searchString" cssClass="error" />
+		  			Youtube Playlist ID <form:errors path="searchString" cssClass="error" />
 		 		</form:label>
 		  		<form:input path="searchString" />
+		  		
+		  		<form:label path="maxResults">
+		  			Max Results to Get <form:errors path="maxResults" cssClass="error" />
+		 		</form:label>
+		  		<form:input path="maxResults" />
 			</fieldset>
 			
 			<p><button type="submit">Submit</button></p>

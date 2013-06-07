@@ -6,6 +6,16 @@ public class SearchBean
 {
 	@NotEmpty
 	private String searchString;
+	
+	@NotEmpty
+	private String maxResults;
+	
+	public String getMaxResults() {
+		return maxResults;
+	}
+	public void setMaxResults(String maxResults) {
+		this.maxResults = maxResults;
+	}
 	public String getSearchString() {
 		return searchString;
 	}
